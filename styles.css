@@ -1,28 +1,21 @@
 body{
     height: 100vh;
-    margin: 0px;
-    padding: 0;
+    width: 100vw;
+    margin: 0rem;
     overflow: hidden;
     background-color: rgb(20, 20, 20);
-    align-items: center;
-    justify-content: center;
-    display: flex;
-
 }
-#projects > .image{
+#image-track > .image{
     width: 40vmin;
     height: 56vmin;
     object-fit: cover;
-    object-position: center;
+    object-position: 100% 50%;
 }
-#projects{
+#image-track{
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.project_cards{
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    height: 260px;
-    width: 300px;
+    gap: 4vmin;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(0%, -50%);
 }

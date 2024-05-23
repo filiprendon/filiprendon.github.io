@@ -1,5 +1,5 @@
 const clientId = "3f1100a54f2549dcb2451025697915cd";
-const redirectUri = "http://127.0.0.1:5500/spotifyData.html";
+const redirectUri = "https://filiprendon.github.io/spotifyData.html";
 
 async function login() {
   const generateRandomString = (length) => {

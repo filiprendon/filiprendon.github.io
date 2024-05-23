@@ -57,7 +57,7 @@ easter.onmouseover = (e) => {
 
 function typeWriter(lp, i = 0) {
   if (i < text.length) {
-    element.textContent += text.charAt(i);
+    typingText.textContent += text.charAt(i);
     setTimeout(() => typeWriter(lp, i + 1), 60);
   } else {
     lp();

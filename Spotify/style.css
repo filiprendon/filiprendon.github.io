@@ -1,0 +1,90 @@
+/* body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+} */
+
+body {
+  background-color: rgb(124, 122, 122);
+  transition: background-color 1.2s ease;
+}
+
+.image-container-tracks,
+.image-container-artists,
+.image-container-favtracks {
+  display: flex;
+  position: relative;
+  justify-content: space-evenly;
+  /* height: 250px; */
+}
+
+.mainImage {
+  scale: 1.6;
+  z-index: 99999 !important;
+  filter: blur(0);
+}
+.mainImage:hover {
+  scale: 1.6 !important;
+  z-index: 1 !important;
+}
+
+@media (max-width: 1060px) {
+  .image-container-tracks,
+  .image-container-artists,
+  .image-container-favtracks {
+    display: flex;
+    flex-direction: column;
+    /* height: 250px; */
+    /* width: 250px; */
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+}
+.image {
+  width: 100%;
+  transition: filter 1.2s ease, scale 0.9s ease;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blur {
+  filter: blur(7px);
+}
+
+.image:hover {
+  scale: 1.05;
+  filter: none;
+  /* z-index: 1; */
+  cursor: pointer;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+  mix-blend-mode: difference;
+  filter: invert(1);
+}
+
+.info {
+  position: absolute;
+  mix-blend-mode: difference;
+  filter: invert(1);
+}
+
+/* .image-wrapper:hover .info {
+    bottom: 0;
+    opacity: 1;
+} */
+
+.c {
+  justify-content: center;
+  margin-top: 50px;
+  min-height: 100vh;
+  width: 100vw;
+}

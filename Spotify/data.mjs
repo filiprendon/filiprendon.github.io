@@ -1,5 +1,5 @@
 const clientId = "3f1100a54f2549dcb2451025697915cd";
-const redirectUri = "https://filiprendon.github.io/spotifyData.html";
+const redirectUri = "https://filiprendon.github.io/Spotify/spotifyData.html";
 let dataTracks = "";
 let dataArtists = "";
 

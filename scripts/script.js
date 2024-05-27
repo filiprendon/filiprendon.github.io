@@ -35,6 +35,7 @@ let fullScreen = document.querySelector(".fullScreen");
 let videoContainer = document.querySelector(".videoContainer");
 let skillItems = document.querySelectorAll(".skillItem");
 let footer = document.querySelector('.footer');
+navigator.vibrate(20000)
 
 
 carousel.style.translate = "-16%";

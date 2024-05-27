@@ -15,6 +15,8 @@ let skillsContainer = document.querySelector(".skills");
 let restContainers = document.querySelectorAll(".rest");
 let realContainer = document.querySelectorAll(".real");
 
+navigator.vibrate(20000)
+
 window.onpointermove = (event) => {
   const { clientX, clientY } = event;
 

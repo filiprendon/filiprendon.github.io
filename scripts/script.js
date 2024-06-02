@@ -1,9 +1,9 @@
 // Unsplash key
-// const accessKey = "iJ-iWopgvFdV_P6BqTyi16Uhcny2C2Xw4D8Ddo_4kfQ";
+const accessKey = "iJ-iWopgvFdV_P6BqTyi16Uhcny2C2Xw4D8Ddo_4kfQ";
 
 // Follow pointer
 const blob = document.getElementById("blob");
-let text = "I'm making good things...";
+let text = "Loading content"
 // const palabras = ["Web Developer", "Drake shlong", "Puerto Freako"];
 let element = document.querySelector(".typing-text");
 let easter = document.querySelector(".intro");

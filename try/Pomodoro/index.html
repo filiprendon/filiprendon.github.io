@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
+    <audio id="alarm" src="alarm.mp3"></audio>
+</head>
+
+<body>
+
+    <div class="menuAll">
+        <div class="context-menu" style="display: none;">
+            <button class="cmOption addDeletePanel">Add to delete panel</button>
+            <button class="cmOption undo">Undo</button>
+        </div>
+        <div class="panel">
+            <button id="pomodoro">Pomodoro</button>
+            <button id="short-break">Short Break</button>
+            <button id="long-break">Long Break</button>
+        </div>
+        <div class="container-temporizador">
+            <div class="temporizador">
+                <!-- <span>25:00</span> -->
+                <p id="min">25</p>
+                <p>:</p>
+                <p id="sec">00</p>
+            </div>
+            <div class="buttons">
+                <button id="startBtn" class="material-symbols-outlined">
+                    play_arrow</button>
+                <!-- <button id="pauseBtn">Pause</button> -->
+                <!-- <button id="restartBtn">Reset</button> -->
+            </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary addTask" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add Task
+            </button>
+
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="add-task-container">
+                            <label for="taskText">Task title:</label>
+                            <input type="text" maxlength="20" name="taskText" id="taskText"
+                                placeholder="Add a task..." />
+                        </div>
+                        <div class="description">
+                            <label for="description">Task description</label>
+                            <input type="text" maxlength="25" name="description" id="description"
+                                placeholder="Add a short description..."></input>
+                        </div>
+                        <div class="category">
+                            <label for="category">Category:</label>
+                            <select class="form-select" id="category" aria-label="Default select example">
+                                <option value="0" selected disabled>Choose a category</option>
+                                <option value="1">Dessign</option>
+                                <option value="2">Front-end</option>
+                                <option value="3">Back-end</option>
+                                <option value="4">No category</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="add" class="button add-button material-symbols-outlined">add_task</button>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="kanban">
+
+            <ul class="columns">
+
+                <li class="column to-do-column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div class="column-header">
+                        <h4>To Do</h4>
+                    </div>
+                    <ul class="task-list" id="to-do">
+                        <!-- <li class="task" id="task1" draggable="true" ondragstart="drag(event)">
+                            <p>Prueba</p>
+                        </li>
+                        <li class="task" id="task2" draggable="true" ondragstart="drag(event)">
+                            <p>Prueba 2</p>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <li class="column doing-column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div class="column-header">
+                        <h4>Doing</h4>
+                    </div>
+                    <ul class="task-list" id="doing">
+                        <!-- <li class="task" id="task3" draggable="true" ondragstart="drag(event)">
+                            <p>Prueba</p>
+                        </li>
+                        <li class="task" id="task4" draggable="true" ondragstart="drag(event)">
+                            <p>HOla k tal</p>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <li class="column done-column" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="false">
+                    <div class="column-header">
+                        <h4>Done</h4>
+                    </div>
+                    <ul class="task-list" id="done">
+                        <!-- <li class="task" id="task5">
+                            <p>Qué pasó con el video?</p>
+                            <span class="check-icon"></span>
+                        </li>
+                        <li class="task" id="task6">
+                            <p>Preuba 100</p>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <!-- <li class="column delete-column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div class="column-header">
+                        <h4>Delete</h4>
+                    </div>
+                    <ul class="task-list" id="delete">
+                        <li class="task" id="task7">
+                            <p>Pruebas a borrar</p>
+                        </li>
+                        <li class="task" id="task8">
+                            <p>Hola que tal</p>
+                        </li>
+                    </ul>
+                    <button id="deleteBtn" class="material-symbols-outlined" onclick="deleteTasks()">delete</button>
+                </li> -->
+
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>

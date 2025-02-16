@@ -1,6 +1,6 @@
 // VARIABLES
 
-const removableSection = document.querySelector(".removable-section");
+// const removableSection = document.querySelector(".removable-section");
 const mainSection = document.querySelector(".main-section");
 const ok = document.querySelector(".intro-container");
 const projects = document.querySelector(".projects-section");
@@ -35,7 +35,7 @@ let tlot0 = thirdLine[0].innerText;
 let tlot2 = thirdLine[1].innerText;
 
 // removableSection.addEventListener("animationend", () => {
-removableSection.remove();
+// removableSection.remove();
 // });
 
 const createSpans = (cl) => {
@@ -103,7 +103,7 @@ carousel_items.forEach((i) => {
     blob.style.transform = "scale(4)";
     blob.style.backdropFilter = "";
     blob.style.backgroundColor = "white";
-    blob.textContent = "click me!";
+    blob.textContent = "more";
     // document.body.style.backgroundColor = getComputedStyle(i).backgroundColor;
 
     blob.style.color = "black";

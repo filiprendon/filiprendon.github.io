@@ -246,7 +246,7 @@ p.textEffect {
   color: #1c1d20;
   animation: show-scroll-btn;
   animation-timeline: view();
-  animation-range: entry -10% cover 30%;
+  animation-range: entry -10% cover 28%;
   animation-fill-mode: both;
 }
 
@@ -951,7 +951,7 @@ p.textEffect {
   }
   to {
     opacity: 0;
-    transform: translateY(20dvh);
+    transform: translateY(19dvh);
   }
 }
 

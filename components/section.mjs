@@ -194,7 +194,7 @@ videoElement.addEventListener("mouseout", () => {
 });
 
 window.addEventListener("scroll", () => {
-  if (window.getComputedStyle(scrollNext).opacity == 1) {
+  if (window.getComputedStyle(scrollNext).opacity >= 1) {
     endAnimation.classList.add("show-end-animation");
     setTimeout(() => {
       projectName.className = "project-name";

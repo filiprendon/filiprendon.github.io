@@ -148,6 +148,11 @@ p.textEffect {
   z-index: 100;
 }
 
+/* .default-page-start{
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+} */
+
 .default-page-animation {
   background-color: #1c1d20;
   display: flex;

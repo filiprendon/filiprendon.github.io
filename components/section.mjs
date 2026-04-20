@@ -319,10 +319,14 @@ videoElement.addEventListener("mouseout", () => {
 });
 
 let navigatingNext = false;
+const hideNextEl = document.querySelector(".hide-next");
 window.addEventListener("scroll", () => {
-  if (navigatingNext) return;
-  const op = parseFloat(window.getComputedStyle(scrollNext).opacity) || 0;
-  if (op >= 0.95) {
+  if (navigatingNext || !hideNextEl) return;
+  const rect = hideNextEl.getBoundingClientRect();
+  const vh = window.innerHeight;
+  /* Trigger when hide-next has scrolled well into view:
+     its top is above the 30% mark of viewport AND it's still on screen. */
+  if (rect.top <= vh * 0.3 && rect.bottom > vh * 0.3) {
     navigatingNext = true;
     endAnimation.classList.add("show-end-animation");
     setTimeout(() => {

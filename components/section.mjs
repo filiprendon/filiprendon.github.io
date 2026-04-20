@@ -318,14 +318,17 @@ videoElement.addEventListener("mouseout", () => {
   blob.style.backgroundColor = "";
 });
 
+let navigatingNext = false;
 window.addEventListener("scroll", () => {
-  if (window.getComputedStyle(scrollNext).opacity == 1) {
+  if (navigatingNext) return;
+  const op = parseFloat(window.getComputedStyle(scrollNext).opacity) || 0;
+  if (op >= 0.95) {
+    navigatingNext = true;
     endAnimation.classList.add("show-end-animation");
     setTimeout(() => {
       projectName.className = "project-name";
       projectName.textContent = nextName;
     }, 700);
-
     setTimeout(() => {
       window.location.href = nextLink;
     }, 900);

@@ -142,9 +142,9 @@ p.textEffect {
 
 .loop-space {
   display: block;
-  flex: 0 0 80dvh;
-  min-height: 80dvh;
-  height: 80dvh;
+  flex: 0 0 100dvh;
+  min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
   background: transparent;
   pointer-events: none;
@@ -355,7 +355,7 @@ body:has(.show-projects) .loop-space {
   color: #1c1d20;
   animation: show-scroll-btn;
   animation-timeline: view();
-  animation-range: entry -10% cover 30%;
+  animation-range: entry 0% cover 30%;
   animation-fill-mode: both;
 }
 
@@ -1180,6 +1180,53 @@ body:has(.show-projects) .loop-space {
     transform: scaleY(1);
   }
 } */
+
+/* ---------- SMALL DESKTOP / LAPTOP (intermediate) ---------- */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .intro-wrapper {
+    width: min(42em, 88vw);
+  }
+
+  .intro-text {
+    font-size: clamp(3.2em, 7vw, 6em);
+  }
+
+  .intro-line {
+    height: auto;
+    min-height: 1.1em;
+  }
+
+  .carousel,
+  .carousel-item {
+    width: min(34em, 70vw);
+  }
+
+  .carousel-item {
+    height: clamp(320px, 34vw, 500px);
+  }
+
+  .project-label {
+    font-size: clamp(2em, 3.4vw, 3.2em);
+  }
+
+  .item-title > h1 {
+    font-size: clamp(3.5em, 7vw, 6em);
+  }
+
+  .project-title {
+    font-size: clamp(3em, 6vw, 6.5em);
+    padding: clamp(60px, 8vw, 150px) clamp(40px, 8vw, 150px) 30px;
+  }
+
+  .project-description {
+    font-size: clamp(1.2em, 2vw, 3em);
+    padding: 0 clamp(40px, 8vw, 150px) clamp(60px, 8vw, 150px);
+  }
+
+  .project-improvements {
+    padding: clamp(60px, 8vw, 150px);
+  }
+}
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 900px) {

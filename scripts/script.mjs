@@ -1,6 +1,6 @@
 // VARIABLES
 
-// const removableSection = document.querySelector(".removable-section");
+const removableSection = document.querySelector(".removable-section");
 const mainSection = document.querySelector(".main-section");
 const ok = document.querySelector(".intro-container");
 const projects = document.querySelector(".projects-section");
@@ -35,7 +35,7 @@ let tlot0 = thirdLine[0].innerText;
 let tlot2 = thirdLine[1].innerText;
 
 // removableSection.addEventListener("animationend", () => {
-// removableSection.remove();
+removableSection.remove();
 // });
 
 const createSpans = (cl) => {
@@ -70,26 +70,9 @@ createSpans(".effect");
 //   // }
 // });
 
-carousel_items[0].addEventListener("animationend", () => {
-  let isInCenter = getComputedStyle(carousel_items[0]).backdropFilter;
-
-  if (isInCenter == "blur(1px)") {
-    secondLine[0].innerText = "integrates";
-    secondLine[1].innerText = "ai";
-
-    thirdLine[0].innerText = "web";
-    thirdLine[1].innerText = "automation";
-    console.log();
-  } else {
-    secondLine[0].innerText = slot0;
-    secondLine[1].innerText = slot1;
-
-    thirdLine[0].innerText = tlot0;
-    thirdLine[1].innerText = tlot2;
-  }
-});
 
 document.querySelectorAll("a").forEach((a) => {
+  if (a.closest(".carousel-item")) return;
   a.addEventListener("mouseover", () => {
     blob.style.transform = "scale(2)";
   });
@@ -100,19 +83,12 @@ document.querySelectorAll("a").forEach((a) => {
 
 carousel_items.forEach((i) => {
   i.addEventListener("mouseover", () => {
-    blob.style.transform = "scale(4)";
-    blob.style.backdropFilter = "";
-    blob.style.backgroundColor = "white";
-    blob.textContent = "more";
-    // document.body.style.backgroundColor = getComputedStyle(i).backgroundColor;
-
-    blob.style.color = "black";
+    blob.classList.add("blob-invite");
+    blob.textContent = "click";
   });
   i.addEventListener("mouseout", () => {
-    blob.style.transform = "scale(1)";
-    blob.style.backdropFilter = "invert(1)";
+    blob.classList.remove("blob-invite");
     blob.textContent = "";
-    blob.style.backgroundColor = "";
     document.body.style.backgroundColor = "black";
   });
 
@@ -157,6 +133,50 @@ carousel_items.forEach((i) => {
     }
   });
 });
+
+let isLooping = false;
+const introWrapper = document.querySelector(".intro-wrapper");
+const loopSpace = document.querySelector(".loop-space");
+
+const lockScroll = () => {
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+  document.body.style.pointerEvents = "none";
+};
+const unlockScroll = () => {
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+  document.body.style.pointerEvents = "";
+};
+
+const triggerLoopPop = () => {
+  if (isLooping || !introWrapper) return;
+  isLooping = true;
+  lockScroll();
+  introWrapper.classList.add("intro-loop-pop");
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    introWrapper.classList.remove("intro-loop-pop");
+    carousel_items.forEach((item) => item.classList.remove("show-projects"));
+    unlockScroll();
+    setTimeout(() => {
+      isLooping = false;
+    }, 80);
+  }, 500);
+};
+
+window.addEventListener(
+  "scroll",
+  () => {
+    if (isLooping) return;
+    if (single_project_details && single_project_details.classList.contains("show-details")) return;
+    const atBottom =
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight - 2;
+    if (atBottom) triggerLoopPop();
+  },
+  { passive: true }
+);
 
 animateLinks.forEach((link) => {
   link.addEventListener("click", (e) => {

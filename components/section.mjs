@@ -39,8 +39,19 @@ class Section extends HTMLElement {
                 </div>
               </div>
 
-                <div class="project-presentation animate-image">
-                  <video src="${video}" autoplay loop muted try="${tryProject}">
+                <div class="project-presentation animate-image video-wrapper">
+                  <video src="${video}" autoplay loop muted try="${tryProject}"></video>
+                  <div class="video-controls">
+                    <button class="vc-btn vc-play" aria-label="Play/Pause"></button>
+                    <button class="vc-btn vc-skip vc-skip-back" aria-label="Back 10s">-10</button>
+                    <div class="vc-progress">
+                      <div class="vc-progress-track">
+                        <div class="vc-progress-fill"></div>
+                      </div>
+                    </div>
+                    <button class="vc-btn vc-skip vc-skip-forward" aria-label="Forward 10s">+10</button>
+                    <span class="vc-time">0:00 / 0:00</span>
+                  </div>
                 </div>
                 <div class="next-project"><p class="textEffect">Next Project</p></div>
 
@@ -121,12 +132,30 @@ hideProjectName.addEventListener("animationend", (e) => {
 
 const marqueeContent = document.getElementById('marqueeContent');
 
-technologies.forEach(tech => {
+const VISIBLE_TECH = 4;
+const visibleTechs = technologies.slice(0, VISIBLE_TECH);
+const extraTechs = technologies.slice(VISIBLE_TECH);
+
+visibleTechs.forEach(tech => {
   const techP = document.createElement('p');
-  techP.className = 'textEffect'
+  techP.className = 'textEffect tech-chip';
   techP.textContent = tech;
   marqueeContent.appendChild(techP);
 });
+
+if (extraTechs.length > 0) {
+  const moreP = document.createElement('p');
+  moreP.className = 'textEffect tech-chip tech-more';
+  moreP.textContent = `+${extraTechs.length}`;
+  marqueeContent.appendChild(moreP);
+
+  extraTechs.forEach(tech => {
+    const techP = document.createElement('p');
+    techP.className = 'textEffect tech-chip tech-extra';
+    techP.textContent = tech;
+    marqueeContent.appendChild(techP);
+  });
+}
 
 const textEffect = document.querySelectorAll(".textEffect");
 
@@ -165,6 +194,102 @@ videoElement.addEventListener("click", () => {
   }
 });
 
+/* --- Custom video controls --- */
+const videoControls = document.querySelector(".video-controls");
+const vcPlayBtn = document.querySelector(".vc-play");
+const vcSkipBack = document.querySelector(".vc-skip-back");
+const vcSkipFwd = document.querySelector(".vc-skip-forward");
+const vcProgress = document.querySelector(".vc-progress");
+const vcFill = document.querySelector(".vc-progress-fill");
+const vcTime = document.querySelector(".vc-time");
+
+const formatTime = (s) => {
+  if (!isFinite(s) || s < 0) s = 0;
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60).toString().padStart(2, "0");
+  return `${m}:${sec}`;
+};
+
+const setPlayIcon = () => {
+  vcPlayBtn.innerHTML = videoElement.paused ? playIcon : pausedIcon;
+};
+
+vcPlayBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (videoElement.paused) videoElement.play();
+  else videoElement.pause();
+  setPlayIcon();
+});
+
+vcSkipBack.addEventListener("click", (e) => {
+  e.stopPropagation();
+  videoElement.currentTime = Math.max(0, videoElement.currentTime - 10);
+});
+
+vcSkipFwd.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const d = videoElement.duration || 0;
+  videoElement.currentTime = Math.min(d, videoElement.currentTime + 10);
+});
+
+const updateProgress = () => {
+  const d = videoElement.duration || 0;
+  const t = videoElement.currentTime || 0;
+  const pct = d > 0 ? (t / d) * 100 : 0;
+  vcFill.style.width = `${pct}%`;
+  vcTime.textContent = `${formatTime(t)} / ${formatTime(d)}`;
+  requestAnimationFrame(updateProgress);
+};
+requestAnimationFrame(updateProgress);
+
+videoElement.addEventListener("play", setPlayIcon);
+videoElement.addEventListener("pause", setPlayIcon);
+setPlayIcon();
+
+let isScrubbing = false;
+const scrubFromEvent = (ev) => {
+  const rect = vcProgress.querySelector(".vc-progress-track").getBoundingClientRect();
+  const x = Math.min(Math.max(ev.clientX - rect.left, 0), rect.width);
+  const pct = rect.width > 0 ? x / rect.width : 0;
+  const d = videoElement.duration || 0;
+  if (d > 0) videoElement.currentTime = pct * d;
+};
+
+vcProgress.addEventListener("pointerdown", (e) => {
+  e.stopPropagation();
+  isScrubbing = true;
+  vcProgress.classList.add("dragging");
+  vcProgress.setPointerCapture(e.pointerId);
+  scrubFromEvent(e);
+});
+vcProgress.addEventListener("pointermove", (e) => {
+  if (!isScrubbing) return;
+  scrubFromEvent(e);
+});
+const endScrub = (e) => {
+  if (!isScrubbing) return;
+  isScrubbing = false;
+  vcProgress.classList.remove("dragging");
+  try { vcProgress.releasePointerCapture(e.pointerId); } catch (_) {}
+};
+vcProgress.addEventListener("pointerup", endScrub);
+vcProgress.addEventListener("pointercancel", endScrub);
+
+/* Hide custom blob cursor entirely when pointer is on controls */
+videoControls.addEventListener("mouseenter", () => {
+  blob.style.transform = "scale(1)";
+  blob.textContent = "";
+  blob.innerHTML = "";
+  blob.style.backgroundColor = "";
+  blob.style.boxShadow = "";
+  blob.style.color = "";
+  blob.style.backdropFilter = "invert(1)";
+  blob.style.opacity = "0";
+});
+videoControls.addEventListener("mouseleave", () => {
+  blob.style.opacity = "";
+});
+
 videoElement.addEventListener("mouseover", () => {
   if (videoElement.getAttribute("try") !== "pause") {
     blob.style.transform = "scale(3)";
@@ -194,7 +319,7 @@ videoElement.addEventListener("mouseout", () => {
 });
 
 window.addEventListener("scroll", () => {
-  if (window.getComputedStyle(scrollNext).opacity >= 1) {
+  if (window.getComputedStyle(scrollNext).opacity == 1) {
     endAnimation.classList.add("show-end-animation");
     setTimeout(() => {
       projectName.className = "project-name";
